@@ -5,7 +5,9 @@ import { Provider, connect } from 'react-redux';
 import { createLogger } from 'redux-logger'
 import createSagaMiddleware from 'redux-saga';
 import rootReducer from './reducers/reducers';
+import axios from 'axios';
 
+import MainUI from './components/MainUI';
 
 import './index.css';
 import App from './App';
@@ -21,9 +23,14 @@ const store = createStore(
     composeEnhancers(applyMiddleware(sagaMiddlewares, logger))
 );
 
+//ReactDOM.render(<App />, document.getElementById('root'));
 
-
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+    <Provider store={store}>
+        <MainUI />
+    </Provider>,
+    document.getElementById('root')
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

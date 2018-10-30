@@ -1,7 +1,9 @@
 import { combineReducers } from 'redux';
 
-const rootReducer = combineReducers({
+import { LightButton } from './LightButton';
 
+const rootReducer = combineReducers({
+    LightButton
 });
 
 export default rootReducer;
