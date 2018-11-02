@@ -1,17 +1,24 @@
 var express = require('express');
 var router = express.Router();
 
-const bodyParser = require('body-parser');
+let axios = require('axios');
+require('dotenv').config();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.get('/test', function(req, res, next) {
-  res.json({
-    msg: "GET accepted",
-    param: req.body
+router.get('/list', (req, res, next) => {
+  axios({
+    method: "GET",
+    url: "http://"
+          + process.env.HUB_IPADDR
+          + "/api"
+          + process.env.HUB_USERNAME
+  })
+  .then((response) => {
+    res.json(response.data);
   });
 });
 

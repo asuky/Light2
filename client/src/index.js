@@ -5,29 +5,58 @@ import { Provider, connect } from 'react-redux';
 import { createLogger } from 'redux-logger'
 import createSagaMiddleware from 'redux-saga';
 import rootReducer from './reducers/reducers';
-import axios from 'axios';
+import allSagas from './sagas/allsagas';
 
 import MainUI from './components/MainUI';
 
+import { loadLights } from './actions/actions';
+
 import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 const sagaMiddlewares = createSagaMiddleware();
 const logger = createLogger();
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-
 const store = createStore(
     rootReducer,
     composeEnhancers(applyMiddleware(sagaMiddlewares, logger))
 );
 
+sagaMiddlewares.run(allSagas);
+
 //ReactDOM.render(<App />, document.getElementById('root'));
+
+function mapStateToProps(state) {
+    return {
+        lightsData: state.LightButton.lightsData
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        onRefreshClick: () => {
+            dispatch(loadLights());
+        },
+        onLightButtonClick: () => {
+            
+        }
+
+        
+    }
+}
+
+const AppContainer = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(MainUI);
+
+// 開始時に電灯状態をロードするため1回だけ LOAD_LIGHTS を dispatch する
+store.dispatch(loadLights());
 
 ReactDOM.render(
     <Provider store={store}>
-        <MainUI />
+        <AppContainer />
     </Provider>,
     document.getElementById('root')
 );
