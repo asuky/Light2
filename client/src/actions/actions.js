@@ -18,8 +18,13 @@ export function setLightsStatus(lightsStatus) {
     }
 }
 
-export function toggleLight() {
+export function toggleLight(id, status) {
+    
     return {
-        type: TOGGLE_LIGHT
+        type: TOGGLE_LIGHT,
+        payload: {
+            lightID: id,
+            lightStatus: status
+        }
     }
 }

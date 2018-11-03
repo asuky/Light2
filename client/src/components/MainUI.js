@@ -54,7 +54,7 @@ class MainUI extends Component {
         let hubAddr = "Not Found";
         
         if ( this.props.lightsData.config != null) {
-            console.log(this.props.lightsData.config);
+            console.log(this.props.lightsData);
             hubAddr = this.props.lightsData.config.ipaddress;
         }
         
@@ -77,7 +77,10 @@ class MainUI extends Component {
                         />
                     </Toolbar>
                 </AppBar>
-                <MainPanel lights={ this.props.lightsData.lights } />
+                <MainPanel
+                    lights={ this.props.lightsData.lights }
+                    handleClick={ this.props.onLightButtonClick }
+                />
                 
                 <BottomNavigation
                     className={ classes.bottomNavigation }

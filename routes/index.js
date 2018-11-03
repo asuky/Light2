@@ -29,11 +29,31 @@ router.post('/test', function(req, res, next) {
   });
 });
 
-router.put('/test', function(req, res, next) {
+router.put('/light', function(req, res, next) {
+  process.on('unhandledRejection', console.dir);
+  axios({
+    method: "PUT",
+    url: "http://"
+          + process.env.HUB_IPADDR
+          + "/api/"
+          + process.env.HUB_USERNAME
+          + "/lights/"
+          + req.body.id
+          + "/state",
+    data: { on: req.body.status }
+  })
+  .then((response) => {
+    console.log(response.data);
+    res.json(response.data);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+  /*
   res.json({
     msg: "PUT accepted",
     param: req.body
-  });
+  });*/
 });
 
 router.delete('/test', function(req, res, next) {

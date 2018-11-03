@@ -9,7 +9,7 @@ import allSagas from './sagas/allsagas';
 
 import MainUI from './components/MainUI';
 
-import { loadLights } from './actions/actions';
+import { loadLights, toggleLight } from './actions/actions';
 
 import './index.css';
 import * as serviceWorker from './serviceWorker';
@@ -38,8 +38,9 @@ function mapDispatchToProps(dispatch) {
         onRefreshClick: () => {
             dispatch(loadLights());
         },
-        onLightButtonClick: () => {
-            
+        onLightButtonClick: (id, status) => {
+            console.log("id: " + id + " / status: " + status);
+            dispatch(toggleLight(id, status));
         }
 
         
